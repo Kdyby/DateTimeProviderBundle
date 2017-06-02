@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * This file is part of the Kdyby (http://www.kdyby.org)
+ *
+ * Copyright (c) 2008 Filip Procházka (filip@prochazka.su)
+ *
+ * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
+namespace Kdyby\DateTimeProviderBundle\DependencyInjection;
+
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+
+class Configuration implements \Symfony\Component\Config\Definition\ConfigurationInterface
+{
+
+	use \Kdyby\StrictObjects\Scream;
+
+	public const TYPE_CURRENT = 'current_time';
+	public const TYPE_REQUEST_TIME = 'request_time';
+	public const TYPE_MUTABLE_REQUEST_TIME = 'mutable_request_time';
+	private const TYPES = [self::TYPE_CURRENT, self::TYPE_REQUEST_TIME, self::TYPE_MUTABLE_REQUEST_TIME];
+
+	public function getConfigTreeBuilder(): TreeBuilder
+	{
+		$treeBuilder = new TreeBuilder();
+		$rootNode = $treeBuilder->root('kdyby_datetime_provider');
+
+		// @codingStandardsIgnoreStart
+		$rootNode
+			->children()
+				->scalarNode('type')
+					->defaultValue(self::TYPE_CURRENT)
+					->validate()
+						->ifNull()
+						->ifNotInArray(self::TYPES)
+							->thenInvalid('Type should be one of: ' . implode(', ', self::TYPES) . '.')
+						->end()
+					->end()
+				->end()
+			->end();
+		// @codingStandardsIgnoreEnd
+
+		return $treeBuilder;
+	}
+
+}

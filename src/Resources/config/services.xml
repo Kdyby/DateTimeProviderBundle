@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="Kdyby\DateTimeProvider\DateTimeProviderInterface" alias="kdyby.datetime_provider.provider" />
+        <service id="Kdyby\DateTimeProvider\DateProviderInterface" alias="kdyby.datetime_provider.provider" />
+        <service id="Kdyby\DateTimeProvider\TimeProviderInterface" alias="kdyby.datetime_provider.provider" />
+        <service id="Kdyby\DateTimeProvider\TimeZoneProviderInterface" alias="kdyby.datetime_provider.provider" />
+
+        <service id="kdyby.datetime_provider.provider" />
+
+        <service id="Kdyby\DateTimeProvider\Provider\ConstantProvider" public="false">
+            <argument type="expression">service('Kdyby\\DateTimeProviderBundle\\RequestTimeAccessor').getRequestTime()</argument>
+        </service>
+        <service id="Kdyby\DateTimeProvider\Provider\MutableProvider" public="false">
+            <argument type="expression">service('Kdyby\\DateTimeProviderBundle\\RequestTimeAccessor').getRequestTime()</argument>
+        </service>
+        <service id="Kdyby\DateTimeProvider\Provider\CurrentProvider" public="false" />
+
+        <service id="Kdyby\DateTimeProviderBundle\RequestTimeAccessor" public="false">
+            <argument type="service" id="Symfony\Component\HttpFoundation\RequestStack" />
+        </service>
+    </services>
+</container>

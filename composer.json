@@ -1,0 +1,38 @@
+{
+    "name": "kdyby/datetime-provider-bundle",
+    "type": "symfony-bundle",
+    "description": "Time provider, providing consistent current date, time, datetime and timezone across the request.",
+    "keywords": ["kdyby", "date", "time", "datetime", "microseconds", "clock", "provider", "symfony", "bundle"],
+    "homepage": "http://kdyby.org",
+    "license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+    "require": {
+        "php": "^7.1",
+        "kdyby/datetime-provider": "@dev",
+        "kdyby/strict-objects": "^1.0",
+        "symfony/config": "^3.3",
+        "symfony/expression-language": "^3.3",
+        "symfony/dependency-injection": "^3.3",
+        "symfony/http-kernel": "^3.3"
+    },
+    "require-dev": {
+        "kdyby/coding-standard": "^1.0@dev",
+        "phpstan/phpstan-shim": "^0.7",
+        "phpunit/phpunit": "~6.2",
+        "symfony/yaml": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kdyby\\DateTimeProviderBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KdybyTests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
