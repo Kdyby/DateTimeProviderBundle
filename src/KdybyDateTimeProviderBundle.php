@@ -12,9 +12,20 @@ declare(strict_types = 1);
 
 namespace Kdyby\DateTimeProviderBundle;
 
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+
 class KdybyDateTimeProviderBundle extends \Symfony\Component\HttpKernel\Bundle\Bundle
 {
 
 	use \Kdyby\StrictObjects\Scream;
+
+	public function getContainerExtension(): ExtensionInterface
+	{
+		if ($this->extension === NULL) {
+			$this->extension = $this->createContainerExtension();
+		}
+
+		return $this->extension;
+	}
 
 }
