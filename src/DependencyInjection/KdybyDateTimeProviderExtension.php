@@ -16,6 +16,7 @@ use Kdyby\DateTimeProvider\Provider\ConstantProvider;
 use Kdyby\DateTimeProvider\Provider\CurrentProvider;
 use Kdyby\DateTimeProvider\Provider\MutableProvider;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
@@ -52,18 +53,23 @@ class KdybyDateTimeProviderExtension extends \Symfony\Component\HttpKernel\Depen
 	{
 		switch ($config['type']) {
 			case Configuration::TYPE_CURRENT:
-				$container->setAlias(self::SERVICE_NAME, CurrentProvider::class);
+				$this->registerAlias($container, CurrentProvider::class);
 				return;
 			case Configuration::TYPE_REQUEST_TIME:
-				$container->setAlias(self::SERVICE_NAME, ConstantProvider::class);
+				$this->registerAlias($container, ConstantProvider::class);
 
 				return;
 			case Configuration::TYPE_MUTABLE_REQUEST_TIME:
-				$container->setAlias(self::SERVICE_NAME, MutableProvider::class);
+				$this->registerAlias($container, MutableProvider::class);
 				return;
 		}
 
 		assert(FALSE);
+	}
+
+	private function registerAlias(ContainerBuilder $container, string $alias): void
+	{
+		$container->setAlias(self::SERVICE_NAME, new Alias($alias, TRUE));
 	}
 
 }

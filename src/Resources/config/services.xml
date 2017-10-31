@@ -5,12 +5,12 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="Kdyby\DateTimeProvider\DateTimeProviderInterface" alias="kdyby.datetime_provider.provider" />
-        <service id="Kdyby\DateTimeProvider\DateProviderInterface" alias="kdyby.datetime_provider.provider" />
-        <service id="Kdyby\DateTimeProvider\TimeProviderInterface" alias="kdyby.datetime_provider.provider" />
-        <service id="Kdyby\DateTimeProvider\TimeZoneProviderInterface" alias="kdyby.datetime_provider.provider" />
+        <service id="Kdyby\DateTimeProvider\DateTimeProviderInterface" alias="kdyby.datetime_provider.provider" public="true" />
+        <service id="Kdyby\DateTimeProvider\DateProviderInterface" alias="kdyby.datetime_provider.provider" public="true" />
+        <service id="Kdyby\DateTimeProvider\TimeProviderInterface" alias="kdyby.datetime_provider.provider" public="true" />
+        <service id="Kdyby\DateTimeProvider\TimeZoneProviderInterface" alias="kdyby.datetime_provider.provider" public="true" />
 
-        <service id="kdyby.datetime_provider.provider" />
+        <service id="kdyby.datetime_provider.provider" public="true" />
 
         <service id="Kdyby\DateTimeProvider\Provider\ConstantProvider" public="false">
             <argument type="expression">service('Kdyby\\DateTimeProviderBundle\\RequestTimeAccessor').getRequestTime()</argument>
