@@ -9,16 +9,16 @@
         "php": "^7.1",
         "kdyby/datetime-provider": "@dev",
         "kdyby/strict-objects": "^1.0",
-        "symfony/config": "^3.3",
-        "symfony/expression-language": "^3.3",
-        "symfony/dependency-injection": "^3.3",
-        "symfony/http-kernel": "^3.3"
+        "symfony/config": "^3.3|^4.0",
+        "symfony/expression-language": "^3.3|^4.0",
+        "symfony/dependency-injection": "^3.3|^4.0",
+        "symfony/http-kernel": "^3.3|^4.0"
     },
     "require-dev": {
         "kdyby/coding-standard": "^1.0@dev",
         "phpstan/phpstan-shim": "^0.7",
         "phpunit/phpunit": "~6.2",
-        "symfony/yaml": "^3.3"
+        "symfony/yaml": "^3.3|^4.0"
     },
     "autoload": {
         "psr-4": {
@@ -34,5 +34,6 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
-    }
+    },
+    "minimum-stability": "beta"
 }
