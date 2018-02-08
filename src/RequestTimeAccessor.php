@@ -31,7 +31,8 @@ class RequestTimeAccessor
 
 	public function getRequestTime(): DateTimeImmutable
 	{
-		$time = $this->requestStack->getCurrentRequest()->server->get('REQUEST_TIME_FLOAT');
+		$request = $this->requestStack->getCurrentRequest();
+		$time = $request !== NULL ? $request->server->get('REQUEST_TIME_FLOAT') : $_SERVER['REQUEST_TIME_FLOAT'];
 		return (new DateTimeImmutable(sprintf('@%.6f', $time)))->setTimezone(new DateTimeZone(date_default_timezone_get()));
 	}
 

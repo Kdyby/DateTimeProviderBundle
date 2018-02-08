@@ -41,4 +41,20 @@ class RequestTimeAccessorTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame('123456789.123456', $this->accessor->getRequestTime()->format('U.u'));
 	}
 
+	public function testFallback(): void
+	{
+		$_SERVER['REQUEST_TIME_FLOAT'] = 123456789.123456;
+
+		$this->assertSame('123456789.123456', $this->accessor->getRequestTime()->format('U.u'));
+	}
+
+	public function testPriority(): void
+	{
+		$_SERVER['REQUEST_TIME_FLOAT'] = 123456789.123456;
+		$this->requestStack->push(Request::createFromGlobals());
+		$_SERVER['REQUEST_TIME_FLOAT'] = 987654321.123456;
+
+		$this->assertSame('123456789.123456', $this->accessor->getRequestTime()->format('U.u'));
+	}
+
 }
