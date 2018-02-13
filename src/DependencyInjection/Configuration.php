@@ -8,26 +8,27 @@
  * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Kdyby\DateTimeProviderBundle\DependencyInjection;
 
+use Kdyby\StrictObjects\Scream;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class Configuration implements \Symfony\Component\Config\Definition\ConfigurationInterface
+class Configuration implements ConfigurationInterface
 {
+    use Scream;
 
-	use \Kdyby\StrictObjects\Scream;
+    public const TYPE_CURRENT              = 'current_time';
+    public const TYPE_REQUEST_TIME         = 'request_time';
+    public const TYPE_MUTABLE_REQUEST_TIME = 'mutable_request_time';
+    private const TYPES                    = [self::TYPE_CURRENT, self::TYPE_REQUEST_TIME, self::TYPE_MUTABLE_REQUEST_TIME];
 
-	public const TYPE_CURRENT = 'current_time';
-	public const TYPE_REQUEST_TIME = 'request_time';
-	public const TYPE_MUTABLE_REQUEST_TIME = 'mutable_request_time';
-	private const TYPES = [self::TYPE_CURRENT, self::TYPE_REQUEST_TIME, self::TYPE_MUTABLE_REQUEST_TIME];
-
-	public function getConfigTreeBuilder(): TreeBuilder
-	{
-		$treeBuilder = new TreeBuilder();
-		$rootNode = $treeBuilder->root('kdyby_datetime_provider');
+    public function getConfigTreeBuilder() : TreeBuilder
+    {
+        $treeBuilder = new TreeBuilder();
+        $rootNode    = $treeBuilder->root('kdyby_datetime_provider');
 
 		// @codingStandardsIgnoreStart
 		$rootNode
@@ -44,7 +45,6 @@ class Configuration implements \Symfony\Component\Config\Definition\Configuratio
 			->end();
 		// @codingStandardsIgnoreEnd
 
-		return $treeBuilder;
-	}
-
+        return $treeBuilder;
+    }
 }
