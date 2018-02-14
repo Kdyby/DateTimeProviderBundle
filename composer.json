@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Time provider, providing consistent current date, time, datetime and timezone across the request.",
     "keywords": ["kdyby", "date", "time", "datetime", "microseconds", "clock", "provider", "symfony", "bundle"],
-    "homepage": "http://kdyby.org",
+    "homepage": "https://kdyby.org",
     "license": ["BSD-3-Clause", "GPL-2.0-only", "GPL-3.0-only"],
     "require": {
         "php": "^7.1",
