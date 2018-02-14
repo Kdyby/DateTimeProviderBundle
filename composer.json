@@ -5,6 +5,25 @@
     "keywords": ["kdyby", "date", "time", "datetime", "microseconds", "clock", "provider", "symfony", "bundle"],
     "homepage": "https://kdyby.org",
     "license": ["BSD-3-Clause", "GPL-2.0-only", "GPL-3.0-only"],
+    "authors": [
+        {
+            "name": "Michael Moravec"
+        },
+        {
+            "name": "Richard Ejem"
+        },
+        {
+            "name": "Filip Procházka",
+            "homepage": "https://filip-prochazka.com"
+        },
+        {
+            "name": "Kdyby Community",
+            "homepage": "https://github.com/Kdyby/DateTimeProviderBundle/graphs/contributors"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Kdyby/DateTimeProviderBundle/issues"
+    },
     "require": {
         "php": "^7.1",
         "kdyby/datetime-provider": "@dev",
