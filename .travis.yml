@@ -1,47 +1,71 @@
-language: php
-sudo: false
 dist: trusty
+sudo: false
+language: php
 
 cache:
-    directories:
-        - $HOME/.composer/cache
+  directories:
+    - $HOME/.composer/cache
 
 php:
   - 7.1
+  - 7.2
+  - nightly
 
 before_install:
   - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{,.disabled} || echo "xdebug not available"
   - composer self-update
 
-install: travis_retry composer update --no-interaction --no-suggest --no-progress --prefer-dist
+install:
+  - travis_retry composer update --no-interaction --no-suggest --prefer-dist
 
-script: vendor/bin/phpunit -c tests/phpunit.xml
+script:
+  - vendor/bin/phpunit -c tests/phpunit.xml
+
+stages:
+  - Lint
+  - Test
+  - Code Quality
 
 jobs:
   include:
-    - stage: Test (dev dependencies)
-
-    - stage: Test (stable dependencies)
+    - stage: Test
+      env: DEV_DEPENDENCIES
+      php: 7.2
       install:
-        - travis_retry composer update --no-interaction --no-suggest --no-progress --prefer-dist --prefer-stable
+        - composer config minimum-stability dev
+        - travis_retry composer update --no-interaction --no-suggest --prefer-dist
 
-    - stage: Test (lowest stable dependencies)
+    - stage: Test
+      env: LOWEST_DEPENDENCIES
+      php: 7.1
       install:
-        - travis_retry composer update --no-interaction --no-suggest --no-progress --prefer-dist --prefer-lowest --prefer-stable
+        - travis_retry composer update --no-interaction --no-suggest --prefer-dist --prefer-lowest
 
-    - stage: Lint
-      script:
-        - vendor/bin/parallel-lint -e php,phpt --exclude vendor .
-        - vendor/bin/phpstan.phar analyse --ansi --no-progress -l7 -c phpstan.neon src tests
-        - vendor/bin/phpcs --standard=ruleset.xml --encoding=utf-8 -sp src tests
-
-    - stage: Coverage
+    - stage: Test
+      env: COVERAGE
+      php: 7.1
       before_script:
         - mv ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini{.disabled,}
         - if [[ ! $(php -m | grep -si xdebug) ]]; then echo "xdebug required for coverage"; exit 1; fi
-        - travis_retry wget -O /tmp/coveralls.phar https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
-      install:
-        - travis_retry composer update --no-interaction --no-suggest --no-progress --prefer-dist --prefer-stable
       script:
-        - vendor/bin/phpunit --coverage-clover tests/coverage.xml -c tests/phpunit.xml
+        - vendor/bin/phpunit -c tests/phpunit.xml --coverage-clover tests/coverage.xml
+      after_script:
+        - travis_retry wget -O /tmp/coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar
         - php /tmp/coveralls.phar --verbose --config tests/.coveralls.yml
+
+    - stage: Lint
+      before_script:
+        - travis_retry composer create-project --no-interaction jakub-onderka/php-parallel-lint /tmp/php-parallel-lint
+      script:
+        - vendor/bin/parallel-lint -e php,phpt --exclude vendor .
+
+    - stage: Code Quality
+      env: STATIC_ANALYSIS
+      script:
+        - vendor/bin/phpstan.phar analyse --ansi --no-progress -l 7 -c phpstan.neon src/ tests/
+
+    - stage: Code Quality
+      env: CODING_STANDARDS
+      php: 7.1
+      script:
+        - vendor/bin/phpcs --standard=ruleset.xml --encoding=utf-8 -sp src/ tests/
