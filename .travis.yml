@@ -68,4 +68,4 @@ jobs:
       env: CODING_STANDARDS
       php: 7.1
       script:
-        - vendor/bin/phpcs --standard=ruleset.xml --encoding=utf-8 -sp src/ tests/
+        - vendor/bin/phpcs

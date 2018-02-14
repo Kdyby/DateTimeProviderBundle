@@ -15,7 +15,7 @@
         "symfony/http-kernel": "^3.3|^4.0"
     },
     "require-dev": {
-        "kdyby/coding-standard": "^1.0@dev",
+        "doctrine/coding-standard": "^3.0",
         "phpstan/phpstan-shim": "^0.7",
         "phpunit/phpunit": "~6.2",
         "symfony/yaml": "^3.3|^4.0",
