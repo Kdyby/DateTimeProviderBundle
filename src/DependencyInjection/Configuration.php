@@ -15,6 +15,7 @@ namespace Kdyby\DateTimeProviderBundle\DependencyInjection;
 use Kdyby\StrictObjects\Scream;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use function method_exists;
 
 class Configuration implements ConfigurationInterface
 {
@@ -27,8 +28,13 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder() : TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode    = $treeBuilder->root('kdyby_datetime_provider');
+        $treeBuilder = new TreeBuilder('kdyby_datetime_provider');
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('kdyby_datetime_provider');
+        }
 
 		// @codingStandardsIgnoreStart
 		$rootNode
