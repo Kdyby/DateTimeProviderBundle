@@ -150,7 +150,6 @@ class KdybyDateTimeProviderExtensionTest extends TestCase
             {
                 return $this->dateTime;
             }
-
         };
     }
 

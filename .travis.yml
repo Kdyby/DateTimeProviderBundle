@@ -9,6 +9,8 @@ cache:
 php:
   - 7.1
   - 7.2
+  - 7.3
+  - 7.4snapshot
   - nightly
 
 before_install:
@@ -27,6 +29,9 @@ stages:
   - Code Quality
 
 jobs:
+  allow_failures:
+    -   php: nightly
+
   include:
     - stage: Test
       env: DEV_DEPENDENCIES
