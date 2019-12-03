@@ -28,16 +28,16 @@
         "php": "^7.1",
         "kdyby/datetime-provider": "^1.0",
         "kdyby/strict-objects": "^1.0",
-        "symfony/config": "^3.3|^4.0",
-        "symfony/expression-language": "^3.3|^4.0",
-        "symfony/dependency-injection": "^3.3|^4.0",
-        "symfony/http-kernel": "^3.3|^4.0"
+        "symfony/config": "^3.3|^4.0|^5.0",
+        "symfony/expression-language": "^3.3|^4.0|^5.0",
+        "symfony/dependency-injection": "^3.3|^4.0|^5.0",
+        "symfony/http-kernel": "^3.3|^4.0|^5.0"
     },
     "require-dev": {
         "doctrine/coding-standard": "^3.0",
         "phpstan/phpstan-shim": "^0.7",
         "phpunit/phpunit": "~6.2",
-        "symfony/yaml": "^3.3|^4.0",
+        "symfony/yaml": "^3.3|^4.0|^5.0",
         "jakub-onderka/php-parallel-lint": "^0.9.2"
     },
     "autoload": {
